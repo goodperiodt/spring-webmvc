@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.spring.mvc.chap04.jdbc.JdbcRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-25T08:43:17" hostname="ICT4_02" time="0.988">
+<testsuite name="com.spring.mvc.chap04.jdbc.JdbcRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-26T02:38:15" hostname="ICT4_02" time="0.846">
   <properties/>
-  <testcase name="Person 객체 정보를 데이터베이스에 정상 삽입한다." classname="com.spring.mvc.chap04.jdbc.JdbcRepositoryTest" time="0.988"/>
-  <system-out><![CDATA[17:43:16.281 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.spring.mvc.chap04.jdbc.JdbcRepositoryTest]: JdbcRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:43:16.371 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.spring.mvc.MvcApplication for test class com.spring.mvc.chap04.jdbc.JdbcRepositoryTest
+  <testcase name="특정 아이디 회원을 조회하면 하나의 회원만 조회될 것이고,없는 아이디를 조회하면 null이 리턴될 것이다." classname="com.spring.mvc.chap04.jdbc.JdbcRepositoryTest" time="0.846"/>
+  <system-out><![CDATA[11:38:13.811 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.spring.mvc.chap04.jdbc.JdbcRepositoryTest]: JdbcRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:38:13.898 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.spring.mvc.MvcApplication for test class com.spring.mvc.chap04.jdbc.JdbcRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -13,10 +13,11 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.4)
 
-2024-03-25T17:43:16.649+09:00  INFO 10932 --- [mvc] [    Test worker] c.s.mvc.chap04.jdbc.JdbcRepositoryTest   : Starting JdbcRepositoryTest using Java 17.0.10 with PID 10932 (started by ICT in C:\workspace\spring-webmvc)
-2024-03-25T17:43:16.650+09:00  INFO 10932 --- [mvc] [    Test worker] c.s.mvc.chap04.jdbc.JdbcRepositoryTest   : No active profile set, falling back to 1 default profile: "default"
-2024-03-25T17:43:17.510+09:00  INFO 10932 --- [mvc] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2024-03-25T17:43:17.780+09:00  INFO 10932 --- [mvc] [    Test worker] c.s.mvc.chap04.jdbc.JdbcRepositoryTest   : Started JdbcRepositoryTest in 1.283 seconds (process running for 2.132)
+2024-03-26T11:38:14.166+09:00  INFO 7684 --- [mvc] [    Test worker] c.s.mvc.chap04.jdbc.JdbcRepositoryTest   : Starting JdbcRepositoryTest using Java 17.0.10 with PID 7684 (started by ICT in C:\workspace\spring-webmvc)
+2024-03-26T11:38:14.167+09:00  INFO 7684 --- [mvc] [    Test worker] c.s.mvc.chap04.jdbc.JdbcRepositoryTest   : No active profile set, falling back to 1 default profile: "default"
+2024-03-26T11:38:14.951+09:00  INFO 7684 --- [mvc] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-03-26T11:38:15.204+09:00  INFO 7684 --- [mvc] [    Test worker] c.s.mvc.chap04.jdbc.JdbcRepositoryTest   : Started JdbcRepositoryTest in 1.185 seconds (process running for 2.019)
+null
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
