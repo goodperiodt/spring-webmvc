@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.spring.mvc.chap05.repository.BoardRepositoryImTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-27T05:54:56" hostname="ICT4_02" time="1.144">
+  <properties/>
+  <testcase name="29번 게시물을 삭제하고 다시 조회하면 조회되지 않아야 한다." classname="com.spring.mvc.chap05.repository.BoardRepositoryImTest" time="1.144"/>
+  <system-out><![CDATA[14:54:54.248 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.spring.mvc.chap05.repository.BoardRepositoryImTest]: BoardRepositoryImTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:54:54.339 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.spring.mvc.MvcApplication for test class com.spring.mvc.chap05.repository.BoardRepositoryImTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.4)
+
+2024-03-27T14:54:54.614+09:00  INFO 9320 --- [mvc] [    Test worker] c.s.m.c.r.BoardRepositoryImTest          : Starting BoardRepositoryImTest using Java 17.0.10 with PID 9320 (started by ICT in C:\workspace\spring-webmvc)
+2024-03-27T14:54:54.615+09:00  INFO 9320 --- [mvc] [    Test worker] c.s.m.c.r.BoardRepositoryImTest          : No active profile set, falling back to 1 default profile: "default"
+2024-03-27T14:54:55.683+09:00  INFO 9320 --- [mvc] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-03-27T14:54:56.304+09:00  INFO 9320 --- [mvc] [    Test worker] c.s.m.c.r.BoardRepositoryImTest          : Started BoardRepositoryImTest in 1.828 seconds (process running for 2.666)
+2024-03-27T14:54:57.185+09:00  INFO 9320 --- [mvc] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-27T14:54:57.452+09:00  INFO 9320 --- [mvc] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@681311a7
+2024-03-27T14:54:57.454+09:00  INFO 9320 --- [mvc] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
