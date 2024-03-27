@@ -33,7 +33,7 @@ class ScoreRepositoryImplTest {
     @DisplayName("tbl_score의 모든 학생 목록을 조회했을 때 학생의 수는 4명일 것이다.")
     void findAllTest() {
         // given
-
+        String sort = "num";
         // when
         List<Score> scoreList = repository.findAll(sort);
         System.out.println("scoreList = " + scoreList);
