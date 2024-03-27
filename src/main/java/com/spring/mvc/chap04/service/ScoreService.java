@@ -1,10 +1,14 @@
 package com.spring.mvc.chap04.service;
 
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
+import com.spring.mvc.chap04.dto.ScoreResponseDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Controller와 Repository 사이에 위치하여
 // 중간 로직을 처리하는 Service
@@ -26,4 +30,23 @@ public class ScoreService {
         Score score = new Score(dto);
         return repository.save(score);
     }
+
+    // 목록 조회 중간처리
+    /*
+        컨트롤러는 데이터베이스에서 성적정보 리스트를
+        조회해 오기를 원하고 있다.
+        그런데 데이터베이스는 민감한정보까지 모두 조회한다.
+        그리고 컬럼명도 그대로 노출하기 때문에
+        이 모든것을 숨기는 처리를 하고 싶다.
+     */
+//    public List<Score> findAll() {
+//        List<ScoreResponseDTO> dtoList = new ArrayList<>();
+//        List<Score> scoreList = repository.findAll();
+//
+//        for (Score score : scoreList) {
+//            ScoreRequestDTO dto = new ScoreRequestDTO(score);
+//            dtoList.add(dto);
+//        }
+//        return dtoList;
+//    }
 }

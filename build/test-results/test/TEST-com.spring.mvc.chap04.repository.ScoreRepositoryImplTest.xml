@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.spring.mvc.chap04.repository.ScoreRepositoryImplTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-03-26T05:36:38" hostname="ICT4_02" time="1.041">
+  <properties/>
+  <testcase name="1번 학생을 삭제한 후 1번 학생을 조회했을 때 조회되지 않아야 한다." classname="com.spring.mvc.chap04.repository.ScoreRepositoryImplTest" time="1.041"/>
+  <system-out><![CDATA[14:36:36.287 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.spring.mvc.chap04.repository.ScoreRepositoryImplTest]: ScoreRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:36:36.379 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.spring.mvc.MvcApplication for test class com.spring.mvc.chap04.repository.ScoreRepositoryImplTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.4)
+
+2024-03-26T14:36:36.665+09:00  INFO 12300 --- [mvc] [    Test worker] c.s.m.c.r.ScoreRepositoryImplTest        : Starting ScoreRepositoryImplTest using Java 17.0.10 with PID 12300 (started by ICT in C:\workspace\spring-webmvc)
+2024-03-26T14:36:36.666+09:00  INFO 12300 --- [mvc] [    Test worker] c.s.m.c.r.ScoreRepositoryImplTest        : No active profile set, falling back to 1 default profile: "default"
+2024-03-26T14:36:37.697+09:00  INFO 12300 --- [mvc] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-03-26T14:36:38.265+09:00  INFO 12300 --- [mvc] [    Test worker] c.s.m.c.r.ScoreRepositoryImplTest        : Started ScoreRepositoryImplTest in 1.741 seconds (process running for 2.602)
+2024-03-26T14:36:39.028+09:00  INFO 12300 --- [mvc] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-26T14:36:39.293+09:00  INFO 12300 --- [mvc] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@a1cb94
+2024-03-26T14:36:39.294+09:00  INFO 12300 --- [mvc] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
