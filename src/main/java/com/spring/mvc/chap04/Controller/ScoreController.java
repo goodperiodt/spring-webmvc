@@ -85,6 +85,7 @@ public class ScoreController {
     }
 
     // 성적 목록 조회
+    /*
     @GetMapping("/list")
     public String list(Model model) {
         System.out.println("/score/list: GET!!!");
@@ -93,6 +94,8 @@ public class ScoreController {
         model.addAttribute("sList", scoreList);
         return "chap04/score-list";
     }
+
+     */
 
 
 }
