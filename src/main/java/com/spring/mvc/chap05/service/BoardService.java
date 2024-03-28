@@ -40,8 +40,10 @@ public class BoardService {
 
         Board board = repository.findOne(bno);
         return new BoardDetailResponseDTO(board);
+    }
 
-
+    public void delete(int bno) {
+        repository.delete(bno);
     }
 }
 

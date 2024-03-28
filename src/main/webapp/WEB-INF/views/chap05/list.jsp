@@ -80,7 +80,7 @@
                 </section>
 
                 <div class="card-btn-group">
-                    <button class="del-btn" data-href="#">
+                    <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -144,17 +144,51 @@
     // 카드 형태의 게시물들을 감싸고 있는 부모 요소 취득
     const $cardContainer = document.querySelector('.card-container');
 
+    // 삭제에 필요한 요소들을 먼저 얻겠습니다.
+    const $modal = document.getElementById('modal'); // 모달창 얻기
+    const $confirmDelete = document.getElementById('confirmDelete'); // 모달 삭제 확인버튼
+    const $cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소버튼
+
+
     $cardContainer.addEventListener('click', e => {
         console.log('이벤트 타겟: ', e.target);
         if (e.target.matches('.card-container')) return;
 
-        // section태그에 붙은 글 번호를 읽어오자
-        // 이벤트가 발생한 타겟에서 가장 가까운 section.card를 지목해서 data-bno를 얻어오기.
-        const bno = e.target.closest('section.card').dataset.bno;
-        console.log('bno: ' + bno);
+        // 삭제 버튼을 눌렀다면~
+        if (e.target.matches('.card-btn-group *')) {
+            console.log('삭제 버튼 클릭됨!');
+            $modal.style.display = 'flex'; // 숨겨진 모달창을 드러내기.
 
-        // 서버에 요청 보내기
-        location.href='/board/detail/' + bno;
+
+            // 이벤트가 발생한 타겟에서 가장 가까운 .del-btn이 가지고 있는 data-href를 얻는다.
+            const deleteLocation = e.target.closest('.del-btn').dataset.href;
+
+            // 확인 버튼 이벤트
+            $confirmDelete.onclick = e => {
+                // 삭제 요청을 서버에 보내야 한다.
+                location.href = deleteLocation;
+
+                // 모달창을 닫아야 한다.
+                $modal.style.display = 'none';
+            }
+
+            // 삭제 취소 버튼 클릭시 이벤트
+            $cancelDelete.onclick = () => {
+                $modal.style.display = 'none'; 
+            }
+
+        } else { // 삭제 버튼을 제외한 부분은 글 상세조회
+
+            // section태그에 붙은 글 번호를 읽어오자
+            // 이벤트가 발생한 타겟에서 가장 가까운 section.card를 지목해서 data-bno를 얻어오기.
+            const bno = e.target.closest('section.card').dataset.bno;
+            console.log('bno: ' + bno);
+
+            // 서버에 요청 보내기
+            location.href='/board/detail/' + bno;
+        }
+
+       
 
     });
 
