@@ -1,12 +1,14 @@
 package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.dto.request.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.dto.response.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.response.BoardListResponseDTO;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -65,8 +67,7 @@ public class BoardController {
         System.out.println("rDTO = " + dto);
 
         service.register(dto);
-
-        return "redirect:board/list";
+        return "redirect:/board/list";
     }
 
     @GetMapping("/list")
@@ -77,13 +78,14 @@ public class BoardController {
     }
 
 
-
-
-
-
     // 4. 글 삭제 요청 (/board/delete : GET)
     // 글번호 전달되면 삭제 진행
-
+    @GetMapping("/delete")
+    public String delete(int bno) {
+        System.out.println("/board/delete: GET!! "+bno);
+        service.delete(bno);
+        return "redirect:/board/list";
+    }
 
 
 
@@ -93,7 +95,16 @@ public class BoardController {
     // 글번호 전달되면 해당 내용 상세보기 처리
     // chap05/detail.jsp 로 이동
 
+    // 글 번호가 파라미터로 넘어오는 것이 아닌 경로상으로 전달된다면
+    // 해당 정보(글 번호)를 어떻게 서버에서 식별하여 얻어낼 것인가?
+    @GetMapping("/detail/{bno}")
+    public String detail(@PathVariable("bno") int bno, Model model) {
+        System.out.println("/board/detail: GET! "+bno);
+        BoardDetailResponseDTO dto = service.getDetail(bno);
+        // model.addAttribute("bnoInfo", service.getDetail(bno));
 
-
-
+        //detail.jsp에서 값 얻을 때 변수명 b로 지정
+        model.addAttribute("b", dto);
+        return "chap05/detail";
+    }
 }

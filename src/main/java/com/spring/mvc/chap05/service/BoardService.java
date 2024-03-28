@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.service;
 
 
 import com.spring.mvc.chap05.dto.request.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.dto.response.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.response.BoardListResponseDTO;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardRepository;
@@ -37,5 +38,20 @@ public class BoardService {
             dtoList.add(dto);
         }
         return dtoList;
+    }
+
+    public BoardDetailResponseDTO getDetail(int bno) {
+        // 상세보기니까 조회수를 하나 올려주는 처리를 해야 한다.
+        // 레파지토리쪽에 조회수를 하나 올리는 메서드를 작성해야 한다.
+        // 조회수를 먼저 올리는 게 순서다.
+        // 조회수를 먼저 올리고, 해당 데이터를 모두 갖고 있는 객체를 가져온다.
+        repository.updateViewCount(bno);
+
+        Board board = repository.findOne(bno);
+        return new BoardDetailResponseDTO(board);
+    }
+
+    public void delete(int bno) {
+        repository.delete(bno);
     }
 }

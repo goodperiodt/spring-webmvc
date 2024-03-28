@@ -6,7 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+
     <%@ include file="../include/static-head.jsp" %>
+
     <link rel="stylesheet" href="/assets/css/list.css" >
 
 </head>
@@ -14,6 +16,7 @@
 <body>
 
 <%@ include file="../include/header.jsp" %>
+
 
 <div id="wrap">
 
@@ -54,16 +57,15 @@
 
     <!-- 메인 게시판 영역 -->
     <div class="card-container">
-
         <c:forEach var="b" items="${bList}">
             <div class="card-wrapper">
-                <section class="card" data-bno="#">
+                <section class="card" data-bno="${b.boardNo}">
                     <div class="card-title-wrapper">
-                        <h2 class="card-title">${b.shortTitle}</h2>
+                        <h2 class="card-title">"${b.shortTitle}"</h2>
                         <div class="time-view-wrapper">
                             <div class="time">
                                 <i class="far fa-clock"></i>
-                                    ${b.regDate} </div>
+                                    "${b.regDate}" </div>
                             <div class="view">
                                 <i class="fas fa-eye"></i>
                                 <span class="view-count">${b.viewCount}</span>
@@ -71,22 +73,18 @@
                         </div>
                     </div>
                     <div class="card-content">
-
-                      ${b.shortContent}
-
+                      "${b.shortContent}"
                     </div>
                 </section>
 
                 <div class="card-btn-group">
-                    <button class="del-btn" data-href="#">
+                    <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
             </div>
-
         </c:forEach>
-
     </div>
 
     <!-- 게시글 목록 하단 영역 -->
@@ -141,8 +139,89 @@
 
 <script>
 
+    // 카드 형태의 게시물들을 감싸고 있는 부모 요소 취득
+    const $cardContainer = document.querySelector('.card-container');
+
+
+    // 삭제에 필요한 요소들을 먼저 얻겠다
+    // const $modal = document.getElementById('modal'); // 모달 창 얻기
+    // const $confirmDelete = document.getElementById('confironDelete'); // 모달 삭제 확인 버튼
+    // const $cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
+
+    const $modal = document.getElementById('modal'); // 모달 창 얻기
+    const $confirmDelete = document.getElementById('confirmDelete'); // 모달 삭제 확인 버튼
+    const $cancelDelete = document.getElementById('cancelDelete'); // 모달 삭제 취소 버튼
+
+    $cardContainer.addEventListener('click', e => {
+        console.log('이벤트 타겟: ', e.target);
+        if (e.target.matches('.card-container')) return;
+
+        
+        // 삭제 버튼을 눌렀다면
+        // .card-btn-group 뒤에 *은 뭐야?
+        if(e.target.matches('.card-btn-group *')) {
+            console.log('삭제 버튼 클릭됨');
+            $modal.style.display = 'flex'; // 숨겨진 모달창 드러내기
+
+            const deleteLocation = e.target.closest('.del-btn').dataset.href;
+            $confirmDelete.onclick = e => {
+                // 삭제 요청을 서버에 보내야 한다.
+                // 이벤트가 발생한 타겟에서 가장 가까운 .del-btn이 가지고 있는 data-href를 얻기
+                
+                location.href = deleteLocation;
+
+                // 모달창을 닫아야 한다.
+                $modal.style.display = 'none';
+            }
+
+            $cancelDelete.onclick = () => {
+                $modal.style.display = 'none';
+            }
+
+        } else { // 삭제 버튼을 제외한 부분은 글 상세조회 요청이다.
+
+            // section태그에 붙은 글 번호를 읽어오자
+            // 이벤트가 발생한 타겟에서 가장 가까운 section.card를 지목해서 data-bno를 얻어오기.
+            const bno = e.target.closest('section.card').dataset.bno;
+            console.log('bno: ' + bno);
+
+            // 서버에 요청 보내기
+            location.href='/board/detail/' + bno;
+
+        }
+
+    });
+
 
   //========== 게시물 목록 스크립트 ============//
+/*
+    // 카드 형태의 게시물들을 감싸고 있는 부모 요소 취득
+    const $cardContainer = document.querySelector('.card-container');
+  $cardContainer.addEventListener('click', e => {
+    // console.log('cardContainer에 이벤트 발생!')
+    console.log(e.target);
+    // 카드 컨테이너는 전체 영역을 감싸는 .card-wrapper 의 부모 영역
+    if(e.target.matches('.card-container')) return; // ?????-----------
+    
+    // if문에 걸리지 않는다면 하기 코드 진행
+    // section 태그에 붙은 글 번호를 읽어오자
+    // -> e.target은 이벤트가 발생한 곳: 사용자가 게시물 카드를 클릭했고,
+    // 클릭한 게시물 카드의 번호를 얻어오자는 것
+
+    // 이벤트가 발생한 곳에서(e.target) 가장 가까운 section태그 안의 클래스 .card를 지목해서 data-bno을 읽어오자
+    // console.log('card-wrapper에 이벤트 발생!')
+    const bno = e.target.closest('section.card').dataset.bno;
+    console.log('bno: ' + bno);
+
+    // 서버에 요청 보내기
+    // 서버에 요청 보낼 때 해당 게시글 번호도 서버에 파라미터로 전달하기
+    // location.href='/board/detail?bno='+bno;
+
+    // 서버에 요청 보낼 때 해당 게시글 번호(bno)를 경로에 포함시키기
+    // 게시글 번호(bno)를 경로로 만들어ㄴ 서버에 전달하기
+    location.href='/board/detail/'+bno;
+  });
+ */
 
   function removeDown(e) {
     if (!e.target.matches('.card-container *')) return;
