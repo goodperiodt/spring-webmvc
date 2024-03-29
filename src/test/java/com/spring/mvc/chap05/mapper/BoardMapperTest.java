@@ -17,7 +17,7 @@ class BoardMapperTest {
         // given
 
         // when
-        mapper.findAll(page).forEach(board -> System.out.println(board));
+//        mapper.findAll(page).forEach(board -> System.out.println(board));
         // then
     }
 
