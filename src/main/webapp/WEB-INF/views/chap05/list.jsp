@@ -38,7 +38,7 @@
                     <option value="tc">제목+내용</option>
                 </select>
 
-                <input type="text" class="form-control" name="keyword">
+                <input type="text" class="form-control" name="keyword" value="${s.keyword}">
 
                 <button class="btn btn-primary" type="submit">
                     <i class="fas fa-search"></i>
@@ -48,9 +48,9 @@
         </div>
 
         <div class="amount">
-            <div><a href="#">6</a></div>
-            <div><a href="#">18</a></div>
-            <div><a href="#">30</a></div>
+            <div><a href="/board/list?pageNo=1&amount=6&type=${s.type}&keyword=${s.keyword}">6</a></div>
+            <div><a href="/board/list?pageNo=1&amount=18&type=${s.type}&keyword=${s.keyword}">18</a></div>
+            <div><a href="/board/list?pageNo=1&amount=30&type=${s.type}&keyword=${s.keyword}">30</a></div>
         </div>
 
     </div>
@@ -95,33 +95,36 @@
         <!-- 페이지 버튼 영역 -->
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-lg pagination-custom">
-
+                <c:if test="${maker.page.pageNo != 1}">
                     <li class="page-item"><a class="page-link"
-                                             href="#">&lt;&lt;</a>
+                                             href="/board/list?pageNo=1&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">&lt;&lt;</a>
                     </li>
+                </c:if>
 
                 <c:if test="${maker.prev}">
                     <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${maker.begin - 1}">prev</a>
+                                             href="/board/list?pageNo=${maker.begin-1}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">prev</a>
                     </li>
                 </c:if>
 
                 <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
                     <li data-page-num="${i}" class="page-item">
                         <a class="page-link"
-                           href="/board/list?pageNo=${i}">${i}</a>
+                           href="/board/list?pageNo=${i}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">${i}</a>
                     </li>
                 </c:forEach>
 
                 <c:if test="${maker.next}">
                     <li class="page-item"><a class="page-link"
-                                             href="/board/list?pageNo=${maker.end + 1}">next</a>
+                                             href="/board/list?pageNo=${maker.end+1}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">next</a>
                     </li>
                 </c:if>    
-
+                
+                <c:if test="${maker.page.pageNo != maker.finalPage}">
                     <li class="page-item"><a class="page-link"
-                                             href="#">&gt;&gt;</a>
+                                             href="/board/list?pageNo=${maker.finalPage}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}">&gt;&gt;</a>
                     </li>
+                </c:if>
 
             </ul>
         </nav>
@@ -190,7 +193,7 @@
             console.log('bno: ' + bno);
 
             // 서버에 요청 보내기
-            location.href='/board/detail/' + bno;
+            location.href='/board/detail/' + bno + '?pageNo=${s.pageNo}&amount=${s.amount}&type=${s.type}&keyword=${s.keyword}';
         }
 
        
@@ -263,8 +266,23 @@
     });
   }
 
-  appendPageActive();
+  // 검색조건 셀렉트박스 옵션타입 고정하기
+  function fixSearchOption() {
+    const $select = document.getElementById('search-type');
+    // 셀렉트 박스 내에 있는 option 태그들 전부 가져오기
+    const $options = [...$select.children];
 
+    $options.forEach($opt => {
+        if ($opt.value === '${s.type}') {
+            // option 태그에 selected를 주면 그 option이 고정됨.
+            $opt.setAttribute('selected', 'selected');
+        }
+    });
+
+  }
+
+  appendPageActive();
+  fixSearchOption();
 
 
 
