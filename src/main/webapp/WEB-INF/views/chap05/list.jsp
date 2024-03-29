@@ -100,19 +100,24 @@
                                              href="#">&lt;&lt;</a>
                     </li>
 
+                <c:if test="${maker.prev}">
                     <li class="page-item"><a class="page-link"
-                                             href="#">prev</a>
+                                             href="/board/list?pageNo=${maker.begin - 1}">prev</a>
                     </li>
+                </c:if>
 
-                    <li data-page-num="" class="page-item">
+                <c:forEach var="i" begin="${maker.begin}" end="${maker.end}">
+                    <li data-page-num="${i}" class="page-item">
                         <a class="page-link"
-                           href="#">${i}</a>
+                           href="/board/list?pageNo=${i}">${i}</a>
                     </li>
+                </c:forEach>
 
-
+                <c:if test="${maker.next}">
                     <li class="page-item"><a class="page-link"
-                                             href="#">next</a>
+                                             href="/board/list?pageNo=${maker.end + 1}">next</a>
                     </li>
+                </c:if>    
 
                     <li class="page-item"><a class="page-link"
                                              href="#">&gt;&gt;</a>
@@ -239,6 +244,30 @@
   document.querySelector('.add-btn').onclick = e => {
     window.location.href = '/board/write';
   };
+
+  // 사용자가 현재 머물고 있는 페이지 버튼에 active 스타일 부여
+  function appendPageActive() {
+
+    // 현재 서버에서 넘겨준 페이지 번호
+    const currPage = '${maker.page.pageNo}';
+
+    // li 태그들을 전부 확인해서
+    // 현재 페이지 번호와 일치하는 li를 찾은 후 active 클래스 이름 붙이기
+    const $ul = document.querySelector('.pagination');
+    const $liList = [...$ul.children];
+
+    $liList.forEach($li => {
+        if (currPage === $li.dataset.pageNum) {
+            $li.classList.add('active');
+        }
+    });
+  }
+
+  appendPageActive();
+
+
+
+
 
 
 </script>
