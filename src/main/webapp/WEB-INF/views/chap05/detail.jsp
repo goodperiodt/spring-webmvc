@@ -275,11 +275,74 @@
         const URL = '/api/v1/replies'; // 댓글과 관련된 요청 url을 전역변수화.
         const bno = '${b.boardNo}'; // 게시글 번호를 전역변수화.
 
+        // 화면에 댓글 태그들을 렌더링하는 함수
+        function renderReplies(replies) {
+            
+            let tag = '';
+
+            if (replies !== null && replies.length > 0) {
+                
+                for (let reply of replies) {
+                    // 객체 디스트럭처링
+                    const {rno, writer, text, regDate} = reply;
+
+                    tag += `
+                    <div id='replyContent' class='card-body' data-replyId='\${rno}'>
+                        <div class='row user-block'>
+                            <span class='col-md-8'>
+                        `;
+                    
+                    tag += `<b>\${writer}</b>
+                            </span>
+                            <span class='col-md-4 text-right'><b>\${regDate}</b></span>
+                        </div><br>
+                        <div class='row'>
+                            <div class='col-md-9'>\${text}</div>
+                            <div class='col-md-3 text-right'>
+                        `;
+
+                    tag += `
+                        <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;
+                        <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>
+                    `;
+
+                    tag += `   </div>
+                            </div>
+                        </div>
+                        `;
+
+                } // end for
+         
+            } else {
+                tag += "<div id='replyContent' class='card-body'>댓글이 아직 없습니다! ㅠㅠ</div>";
+            }
+
+            // 댓글 수 렌더링
+            document.getElementById('replyCnt').textContent = replies.length;
+            // 댓글 렌더링
+            // 반복문을 이용해서 문자열로 작성한 tag를 댓글영역 div에 innerHTML로 그대로 삽입.
+            document.getElementById('replyData').innerHTML = tag;
+
+        }
+
+
+
         // 서버에 실시간으로 비동기통신을 해서 JSON을 받아오는 함수
         function fetchGetReplies() {
             // fetch 함수를 통해 비동기통신 진행할 때 GET요청은 요청에 관련한 객체를 따로 전달하지 않습니다.
             // method를 get이라고 얘기하지 않고, 데이터 전달 시에는 URL에 포함시켜서 전달.
-            fetch(URL + '/' + bno)
+            // 자바스크립트 문자열 안에 달러와 중괄호를 쓰면 el로 인식, 
+            //템플릿 리터럴 문자를 쓰고 싶으면 앞에 \를 붙여 주세요.
+            fetch(`\${URL}/\${bno}`)
+                .then(res => res.json())
+                .then(replyList => {
+                    console.log(replyList);
+                    // 서버로부터 전달받은 댓글 목록들을 화면에 그려야 한다.
+                    // 기존에는 model에 담아서 jsp로 전달했고, jsp쪽에서 el을 이용해서 화면에 뿌렸죠.
+                    // 이제 서버는 그냥 데이터만 딸랑 던져주고 끝입니다.
+                    // 화면 가공은 js에서 진행해야 합니다.
+                    renderReplies(replyList);
+                });
         }
 
 
@@ -352,6 +415,19 @@
 
 
         }
+
+        // ========= 메인 실행부 =========== //
+
+        // 즉시 실행함수를 통해 페이지가 로딩되면 함수가 자동호출되게 하자.
+        (() => {
+
+            // 댓글을 서버에서 불러오기
+            fetchGetReplies();
+
+        })();
+
+
+
 
     </script>
 
