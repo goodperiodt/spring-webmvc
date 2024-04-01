@@ -270,6 +270,59 @@
 
 </div>
 
+    <script>
+
+        const URL = '/api/v1/replies'; // 댓글과 관련된 요청 url을 전역변수화.
+        const bno = '${b.boardNo}'; // 게시글 번호를 전역변수화.
+
+
+        const $addBtn = document.getElementById('replyAddBtn');
+
+        $addBtn.onclick = e => {
+            
+            const $replyText = document.getElementById('newReplyText'); // 댓글 내용
+            const $replyWriter = document.getElementById('newReplyWriter'); // 댓글 작성자
+
+            // 공백이 제거된 값을 얻음.
+            const textVal = $replyText.value.trim();
+            const writerVal = $replyWriter.value.trim();
+
+            // 사용자 입력값 검증
+            if (textVal === '') {
+                alert('댓글 내용은 필수값입니다!!');
+                return;
+            } else if (writerVal === '') {
+                alert('댓글 작성자는 필수값입니다!!');
+                return;
+            } else if (writerVal.length < 2 || writerVal.length > 8) {
+                alert('댓글 작성자는 2글자에서 8글자 사이로 작성하세요!');
+                return;
+            }
+
+            // 서버로 보낼 데이터 준비.
+            const payload = {
+                text: textVal,
+                author: writerVal,
+                bno: bno
+            };
+
+            // 요청 방식 및 데이터를 전달할 정보 객체 만들기 (POST)
+            const requestInfo = {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            }
+
+            // 서버에 POST 요청 보내기
+            fetch(URL, requestInfo);
+
+
+        }
+
+    </script>
+
 
 
 </body>
