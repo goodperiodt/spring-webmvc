@@ -16,11 +16,13 @@
     <typeAliases>
         <!-- 엔터티 클래스 별칭 붙이기 -->
         <typeAlias type="com.spring.mvc.chap05.entity.Board" alias="board" />
+        <typeAlias type="com.spring.mvc.chap05.entity.Reply" alias="reply" />
     </typeAliases>
 
     <!-- SQL을 적어놓은 XML 파일의 위치를 설정, 하기 설정은 반드시 설정해야 하는 것 -->
     <mappers>
         <mapper resource="mapper/BoardMapper.xml" />
+        <mapper resource="mapper/ReplyMapper.xml" />
     </mappers>
 
 

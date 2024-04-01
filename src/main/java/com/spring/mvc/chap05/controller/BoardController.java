@@ -1,6 +1,8 @@
 package com.spring.mvc.chap05.controller;
 
 import com.spring.mvc.chap05.common.Page;
+import com.spring.mvc.chap05.common.PageMaker;
+import com.spring.mvc.chap05.common.Search;
 import com.spring.mvc.chap05.dto.request.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.dto.response.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.response.BoardListResponseDTO;
@@ -8,10 +10,7 @@ import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -71,12 +70,25 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
+    // 1. 목록 조회 요청 (/board/list : GET)
+    // chap05/list.jsp
     @GetMapping("/list")
-    public String list(Model model, Page page) {
-        System.out.println("page = " + page);
-
-
+    public String list(Model model, @ModelAttribute("s") Search page) {
+        System.out.println("search = " + page);
         List<BoardListResponseDTO> dtoList = service.getList(page);
+
+        // 글 목록을 받아온 다음 페이징 버튼을 어떻게 배치할 것인가
+        // 페이징 버튼 알고리즘 적용
+
+                    // page -> 화면단으로부터 넘어온 page객체
+                    // 게시물의 총 갯수: service.getCount()
+        // PageMaker의 매개변수로 사용자가 요청한 페이지 정보(page)와 총 게시물 갯수를 전달한다.
+        // 페이징 알고리즘 자동 호출
+
+        // model에 글 목록뿐만 아니라 페이지 버튼 정보도 같이 담아서 전달하자.
+        PageMaker pageMaker = new PageMaker(page, service.getCount());
+        model.addAttribute("maker", pageMaker);
+
         model.addAttribute("bList", dtoList);
         return "chap05/list";
     }

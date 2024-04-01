@@ -20,6 +20,7 @@ CREATE TABLE tbl_board (
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder // ?
 public class Board {
     private int boardNo; // 게시글 번호
     private String title; // 제목

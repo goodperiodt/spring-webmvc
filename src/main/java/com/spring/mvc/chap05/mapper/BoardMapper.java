@@ -31,6 +31,6 @@ public interface BoardMapper {
     void updateViewCount(int bno);
 
 
-
-
+    // 총 게시물의 갯수 리턴
+    int getCount();
 }
