@@ -275,6 +275,14 @@
         const URL = '/api/v1/replies'; // 댓글과 관련된 요청 url을 전역변수화.
         const bno = '${b.boardNo}'; // 게시글 번호를 전역변수화.
 
+        // 서버에 실시간으로 비동기통신을 해서 JSON을 받아오는 함수
+        function fetchGetReplies() {
+            // fetch 함수를 통해 비동기통신 진행할 때 GET요청은 요청에 관련한 객체를 따로 전달하지 않습니다.
+            // method를 get이라고 얘기하지 않고, 데이터 전달 시에는 URL에 포함시켜서 전달.
+            fetch(URL + '/' + bno)
+        }
+
+
 
         const $addBtn = document.getElementById('replyAddBtn');
 
@@ -299,7 +307,7 @@
                 return;
             }
 
-            // 서버로 보낼 데이터 준비.
+            // 서버로 보낼 데이터 준비. (js 객체)
             const payload = {
                 text: textVal,
                 author: writerVal,
@@ -312,11 +320,35 @@
                 headers: {
                     'content-type': 'application/json'
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload) // js 객체를 JSON으로 변환해서 body에 추가
             }
 
             // 서버에 POST 요청 보내기
-            fetch(URL, requestInfo);
+            fetch(URL, requestInfo)
+                // then(callbackFn) -> 비동기 통신의 결과를 확인하기 위해 then과 콜백함수 전달
+                // 콜백함수의 매개변수로 응답정보가 담긴 Response 객체가 전달되고, 
+                // Response 객체에서 json 데이터를 꺼내고 싶으면 json(), 단순 텍스트라면 text().
+                .then(res => {
+                    console.log(res.status); // 서버에서 전달한 응답 상태 코드
+                    if (res.status === 200) {
+                        alert('댓글이 정상 등록되었습니다.');
+                        return res.text();
+                    } else {
+                        alert('입력값에 문제가 있습니다! 입력값을 다시 확인해 보세요!');
+                        return res.text();
+                    }
+                })
+                .then(data => {
+                    console.log('응답 성공! ', data);
+                    // 댓글 작성자 input과 댓글 내용 text를 지워주자.
+                    $replyText.value = '';
+                    $replyWriter.value = '';
+
+                    // 댓글 목록 비동기 요청이 들어가야 한다.
+                    // 따로 함수로 빼 주겠습니다. 
+                    // (등록 이후 뿐만 아니라 게시글 상세보기에 처음 들어왔을 때도 호출되어야 하니까)
+                    fetchGetReplies();
+                });
 
 
         }
