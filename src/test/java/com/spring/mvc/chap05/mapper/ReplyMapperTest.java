@@ -1,8 +1,6 @@
 package com.spring.mvc.chap05.mapper;
 
-import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.entity.Reply;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +51,7 @@ class ReplyMapperTest {
         // given
         int boardNo = 77;
         // when
-        List<Reply> replyList = replyMapper.findAll(boardNo);
+        List<Reply> replyList = replyMapper.findAll(boardNo, page);
 
         // then
         assertEquals(9, replyList.size());
