@@ -31,6 +31,7 @@ public class Reply {
     private String replyWriter;
     private LocalDateTime replyDate;
     private int boardNo;
+    private LocalDateTime updateDate;
 
 }
 

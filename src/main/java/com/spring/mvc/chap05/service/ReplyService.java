@@ -2,6 +2,7 @@ package com.spring.mvc.chap05.service;
 
 import com.spring.mvc.chap05.common.Page;
 import com.spring.mvc.chap05.common.PageMaker;
+import com.spring.mvc.chap05.dto.request.ReplyModifyRequestDTO;
 import com.spring.mvc.chap05.dto.request.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.response.ReplyDetailResponseDTO;
 import com.spring.mvc.chap05.dto.response.ReplyListResponseDTO;
@@ -48,6 +49,12 @@ public class ReplyService {
                 .pageInfo(new PageMaker(page, count)) // 객체 생성시 page, count를 전달하면 페이징 알고리즘이 돌아감.
                 .build();
 
+    }
+
+    public void modify(ReplyModifyRequestDTO dto) {
+
+        Reply reply = dto.toEntity();
+        mapper.modify(reply);
     }
 }
 
