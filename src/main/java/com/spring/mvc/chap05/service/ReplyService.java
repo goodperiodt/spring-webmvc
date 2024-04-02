@@ -56,6 +56,10 @@ public class ReplyService {
         Reply reply = dto.toEntity();
         mapper.modify(reply);
     }
+
+    public void delete(Integer replyNo) throws Exception {
+        mapper.delete(replyNo);
+    }
 }
 
 
