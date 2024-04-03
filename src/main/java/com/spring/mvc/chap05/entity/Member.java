@@ -14,8 +14,15 @@ CREATE TABLE tbl_member (
 );
  */
 
+import lombok.*;
+
 import java.time.LocalDateTime;
 
+@Getter @Setter @ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Member {
 
     private String account;
