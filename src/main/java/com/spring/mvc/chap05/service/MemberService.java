@@ -5,7 +5,6 @@ import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.entity.Member;
 import com.spring.mvc.chap05.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +54,9 @@ public class MemberService {
     }
 
 
+    public boolean checkDuplicateValue(String type, String keyword) {
+       return memberMapper.isDuplicate(type, keyword);
+    }
 }
 
 
