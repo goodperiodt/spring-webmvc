@@ -6,6 +6,7 @@ import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -64,7 +65,8 @@ public class MemberController {
                          // 리다이렉트는 응답이 나갔다가 재요청이 들어오는데, 그 과정에서
                          // 첫번째 응답이 나가는 순간 모델은 소멸함. (Model의 생명주기는 한 번의 요청과 응답 사이에서만 유효)
                          RedirectAttributes ra,
-                         HttpServletResponse response
+                         HttpServletResponse response,
+                         HttpServletRequest request
                          ) {
         System.out.println("/members/sign-in: POST!");
         System.out.println("dto = " + dto);
@@ -77,7 +79,10 @@ public class MemberController {
         if (result == LoginResult.SUCCESS) { // 로그인 성공 시
 
             // 로그인을 했다는 정보를 계속 유지하기 위한 수단으로 쿠키를 사용하자.
-            makeLoginCookie(dto, response);
+            // makeLoginCookie(dto, response);
+
+            // 세션으로 로그인 유지
+            memberService.maintainLoginState(request.getSession(), dto.getAccount());
 
             return "redirect:/board/list";
         }
@@ -97,7 +102,6 @@ public class MemberController {
 
         // 쿠키가 완성됐다면 응답 객체에 쿠키를 태워서 클라이언트로 전송
         response.addCookie(cookie);
-
     }
 
 
