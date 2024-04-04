@@ -8,6 +8,7 @@ import com.spring.mvc.chap05.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -103,6 +104,23 @@ public class MemberController {
         // 쿠키가 완성됐다면 응답 객체에 쿠키를 태워서 클라이언트로 전송
         response.addCookie(cookie);
     }
+
+    // 로그아웃 요청 처리
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session) {
+
+        // 세션에서 로그인 정보 기록 삭제
+        session.removeAttribute("login");
+
+        // 세션 전체 무효화 (초기화)
+        session.invalidate();
+
+        return "redirect:/";
+
+    }
+
+
+
 
 
 }
