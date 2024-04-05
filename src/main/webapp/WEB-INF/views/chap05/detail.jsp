@@ -174,6 +174,11 @@
             <div class="card">
                 <div class="card-body">
 
+                    <c:if test="${login == null}">
+                        <a href="/members/sign-in">댓글은 로그인 후에 작성할 수 있습니다!</a>
+                    </c:if>
+
+                    <c:if test="${login != null}">
                         <div class="row">
                             <div class="col-md-9">
                                 <div class="form-group">
@@ -196,14 +201,14 @@
                                     <label for="newReplyWriter" hidden>댓글 작성자</label>
                                     <input id="newReplyWriter" name="replyWriter" type="text"
                                            class="form-control" placeholder="작성자 이름"
-                                           style="margin-bottom: 6px;">
+                                           style="margin-bottom: 6px;" value="${login.name}" readonly>
                                     <button id="replyAddBtn" type="button"
                                             class="btn btn-dark form-control">등록
                                     </button>
                                 </div>
                             </div>
                         </div>
-
+                    </c:if>
                 </div>
             </div> <!-- end reply write -->
 
@@ -274,6 +279,10 @@
 
         const URL = '/api/v1/replies'; // 댓글과 관련된 요청 url을 전역변수화.
         const bno = '${b.boardNo}'; // 게시글 번호를 전역변수화.
+        const currentAccount = '${login.account}'; // 로그인한 사람 계정
+        const auth = '${login.auth}'; // 로그인한 사람 권한
+
+        console.log('auth: ', auth);
 
         // 화면에 페이지 버튼들을 렌더링하는 함수
         // 매개변수 선언부에 처음부터 디스트럭처링 해서 받을 수 있다.
@@ -321,7 +330,7 @@
                 
                 for (let reply of replies) {
                     // 객체 디스트럭처링
-                    const {rno, writer, text, regDate, updateDate} = reply;
+                    const {rno, writer, text, regDate, updateDate, account} = reply;
 
                     tag += `
                     <div id='replyContent' class='card-body' data-replyId='\${rno}'>
@@ -337,11 +346,13 @@
                             <div class='col-md-9'>\${text}</div>
                             <div class='col-md-3 text-right'>
                         `;
-
-                    tag += `
-                        <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;
-                        <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>
-                    `;
+                    
+                    if (auth === '관리자회원' || currentAccount === account) {
+                        tag += `
+                            <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;
+                            <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>
+                        `;
+                    }                  
 
                     tag += `   </div>
                             </div>
@@ -407,7 +418,8 @@
         // 댓글 등록 부분
         const $addBtn = document.getElementById('replyAddBtn');
 
-        $addBtn.onclick = e => {
+        if ($addBtn) {
+            $addBtn.onclick = e => {
             
             const $replyText = document.getElementById('newReplyText'); // 댓글 내용
             const $replyWriter = document.getElementById('newReplyWriter'); // 댓글 작성자
@@ -463,7 +475,7 @@
                     console.log('응답 성공! ', data);
                     // 댓글 작성자 input과 댓글 내용 text를 지워주자.
                     $replyText.value = '';
-                    $replyWriter.value = '';
+                    // $replyWriter.value = '';
 
                     // 댓글 목록 비동기 요청이 들어가야 한다.
                     // 따로 함수로 빼 주겠습니다. 
@@ -471,6 +483,7 @@
                     fetchGetReplies();
                 });
 
+        }
         }
 
         // 댓글 삭제 + 수정모드 진입 이벤트 핸들러 등록 및 처리함수
