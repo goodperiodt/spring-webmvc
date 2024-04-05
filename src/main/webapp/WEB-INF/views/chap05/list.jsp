@@ -218,7 +218,7 @@
     $targetCard?.classList.remove('card-hover');
 
     const $delBtn = e.target.closest('.card-wrapper')?.querySelector('.del-btn');
-    $delBtn.style.opacity = '0';
+    if ($delBtn) $delBtn.style.opacity = '0';
   }
 
 
@@ -230,7 +230,7 @@
     $targetCard?.classList.add('card-hover');
 
     const $delBtn = e.target.closest('.card-wrapper')?.querySelector('.del-btn');
-    $delBtn.style.opacity = '1';
+    if ($delBtn) $delBtn.style.opacity = '1';
   }
 
   $cardContainer.onmousedown = e => {

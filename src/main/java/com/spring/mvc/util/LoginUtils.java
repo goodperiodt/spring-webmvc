@@ -1,7 +1,9 @@
 package com.spring.mvc.util;
 
 import com.spring.mvc.chap05.dto.response.LoginUserResponseDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.util.WebUtils;
 
 // 회원 인증, 인가와 관련된 상수와 메서드를 가진 객체
 public class LoginUtils {
@@ -35,6 +37,12 @@ public class LoginUtils {
         LoginUserResponseDTO loginUser = (LoginUserResponseDTO) session.getAttribute(LOGIN_KEY);
         System.out.println("loginUser = " + loginUser);
         return loginUser.getAuth().equals("관리자회원");
+    }
+
+    // 자동로그인 여부 확인
+    public static boolean isAutoLogin(HttpServletRequest request) {
+        // auto라는 이름의 쿠키가 존재한다면 true, 없다면 false
+        return WebUtils.getCookie(request, AUTO_LOGIN_COOKIE) != null;
     }
 
 
