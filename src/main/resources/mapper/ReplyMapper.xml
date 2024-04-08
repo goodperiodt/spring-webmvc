@@ -29,7 +29,11 @@
     </select>
 
     <select id="findAll" resultType="reply">
-        SELECT * FROM tbl_reply
+        SELECT
+            A.*, B.profile_image
+        FROM tbl_reply A
+        LEFT OUTER JOIN tbl_member B
+        ON A.account = B.account
         WHERE board_no = #{bn}
         ORDER BY reply_no
         LIMIT #{p.pageStart}, #{p.amount}

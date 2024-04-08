@@ -25,6 +25,7 @@ public class ReplyDetailResponseDTO {
     private LocalDateTime updateDate;
 
     private String account;
+    private String profile; // 프로필 경로
     
     // 엔터티를 DTO로 바꿔주는 생성자
     public ReplyDetailResponseDTO(Reply reply) {
@@ -34,6 +35,8 @@ public class ReplyDetailResponseDTO {
         this.regDate = reply.getReplyDate();
         this.updateDate = reply.getUpdateDate();
         this.account = reply.getAccount();
+        this.profile = reply.getProfileImage();
+        
     }
 
 }

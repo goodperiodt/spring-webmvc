@@ -333,13 +333,17 @@
                 
                 for (let reply of replies) {
                     // 객체 디스트럭처링
-                    const {rno, writer, text, regDate, updateDate, account} = reply;
+                    const {rno, writer, text, regDate, updateDate, account, profile} = reply;
 
                     tag += `
                     <div id='replyContent' class='card-body' data-replyId='\${rno}'>
                         <div class='row user-block'>
                             <span class='col-md-8'>
                         `;
+
+                    tag += (profile ? `<img class='reply-profile' src='/local\${profile}' alt='profile image' >`
+                                    : `<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='anonymous image' >`);
+
                     
                     tag += `<b>\${writer}</b>
                             </span>
